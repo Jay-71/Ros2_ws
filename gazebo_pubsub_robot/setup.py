@@ -40,6 +40,7 @@ setup(
     entry_points={
         'console_scripts': [
             'cmd_publisher = gazebo_pubsub_robot.cmd_publisher:main',
+            'teleop_wasd = gazebo_pubsub_robot.teleop_wasd:main',
         ],
     },
 )
