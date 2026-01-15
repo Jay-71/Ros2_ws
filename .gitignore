@@ -1,5 +1,24 @@
+# --- Ignore other project folders ---
+countdown_action/
+my_robot_controller/
+sensor_simulation/
+simple_robot_description/
+temp_monitor/
+urdf_tutorial_cpp/
+
+# --- Ignore loose files ONLY in the root (Notice the slash /) ---
+/CMakeLists.txt
+/package.xml
+/setup.cfg
+/setup.py
+/*.py
+/*.action
+/__init__.py
+
+# --- Ignore system files anywhere ---
+.vscode/
 build/
 install/
 log/
-.vscode/
+__pycache__/
 *.db
