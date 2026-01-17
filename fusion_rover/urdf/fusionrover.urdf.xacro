@@ -1,43 +1,39 @@
 <?xml version="1.0"?>
 <robot name="fusionrover" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+  <material name="gray"><color rgba="0.5 0.5 0.5 1.0"/></material>
+  <material name="black"><color rgba="0.0 0.0 0.0 1.0"/></material>
+
   <xacro:property name="chassis_mass"   value="10.0"/>
   <xacro:property name="chassis_length" value="0.45"/>
   <xacro:property name="chassis_width"  value="0.30"/>
   <xacro:property name="chassis_height" value="0.12"/>
-
-  <xacro:property name="wheel_mass"   value="1.0"/>
-  <xacro:property name="wheel_radius" value="0.06"/>
-  <xacro:property name="wheel_width"  value="0.04"/>
-
+  <xacro:property name="wheel_mass"     value="1.0"/>
+  <xacro:property name="wheel_radius"   value="0.06"/>
+  <xacro:property name="wheel_width"    value="0.04"/>
   <xacro:property name="wheel_x_offset" value="0.18"/>
   <xacro:property name="wheel_y_offset" value="0.16"/>
   <xacro:property name="ground_clearance" value="0.02"/>
 
-  <material name="gray">
-    <color rgba="0.5 0.5 0.5 1.0"/>
-  </material>
-  <material name="black">
-    <color rgba="0.0 0.0 0.0 1.0"/>
-  </material>
+  <link name="base_footprint"/>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 ${chassis_height/2 + ground_clearance}" rpy="0 0 0"/>
+  </joint>
 
   <link name="base_link">
     <visual>
-      <geometry>
-        <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
-      </geometry>
+      <geometry><box size="${chassis_length} ${chassis_width} ${chassis_height}"/></geometry>
       <material name="gray"/>
     </visual>
-
     <collision>
-      <geometry>
-        <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
-      </geometry>
+      <geometry><box size="${chassis_length} ${chassis_width} ${chassis_height}"/></geometry>
     </collision>
-
     <inertial>
       <mass value="${chassis_mass}"/>
-      <origin xyz="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <inertia
         ixx="${(1/12) * chassis_mass * (chassis_width*chassis_width + chassis_height*chassis_height)}"
         ixy="0.0" ixz="0.0"
@@ -47,29 +43,20 @@
     </inertial>
   </link>
 
-  <gazebo reference="base_link">
-    <material>Gazebo/Grey</material>
-  </gazebo>
-
   <xacro:macro name="wheel" params="name x y">
     <link name="${name}">
       <visual>
-        <geometry>
-          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
-        </geometry>
-        <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+        <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
+        <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
         <material name="black"/>
       </visual>
-
       <collision>
-        <geometry>
-          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
-        </geometry>
-        <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+        <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
+        <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
       </collision>
-
       <inertial>
         <mass value="${wheel_mass}"/>
+        <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
         <inertia
           ixx="${(1/12)*wheel_mass*(3*wheel_radius*wheel_radius + wheel_width*wheel_width)}"
           ixy="0.0" ixz="0.0"
@@ -88,8 +75,8 @@
 
     <gazebo reference="${name}">
       <material>Gazebo/Black</material>
-      <mu1 value="1.0"/>
-      <mu2 value="1.0"/>
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
     </gazebo>
   </xacro:macro>
 
@@ -97,5 +84,33 @@
   <xacro:wheel name="front_right_wheel" x="${wheel_x_offset}"  y="-${wheel_y_offset}"/>
   <xacro:wheel name="rear_left_wheel"   x="-${wheel_x_offset}" y="${wheel_y_offset}"/>
   <xacro:wheel name="rear_right_wheel"  x="-${wheel_x_offset}" y="-${wheel_y_offset}"/>
+
+  <ros2_control name="FusionRoverSystem" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+    <joint name="front_left_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/><state_interface name="velocity"/>
+    </joint>
+    <joint name="front_right_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/><state_interface name="velocity"/>
+    </joint>
+    <joint name="rear_left_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/><state_interface name="velocity"/>
+    </joint>
+    <joint name="rear_right_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/><state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
+
+  <gazebo>
+    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+      <parameters>$(find fusion_rover)/config/diff_drive_controller.yaml</parameters>
+    </plugin>
+  </gazebo>
 
 </robot>

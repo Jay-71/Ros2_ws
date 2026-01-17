@@ -1,0 +1,46 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 50  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    diff_drive_controller:
+      type: diff_drive_controller/DiffDriveController
+
+diff_drive_controller:
+  ros__parameters:
+
+    # --- JOINT CONFIGURATION ---
+    left_wheel_names: 
+      - front_left_wheel_joint
+      - rear_left_wheel_joint
+    right_wheel_names: 
+      - front_right_wheel_joint
+      - rear_right_wheel_joint
+
+    # --- KINEMATICS ---
+    # wheel_separation: distance between left and right wheels
+    # wheel_radius: radius of the wheels
+    wheel_separation: 0.32
+    wheel_radius: 0.06
+
+    # Multipliers (Required for some ROS 2 versions)
+    wheel_separation_multiplier: 1.0
+    left_wheel_radius_multiplier: 1.0
+    right_wheel_radius_multiplier: 1.0
+
+    # --- ODOMETRY ---
+    odom_frame_id: odom
+    base_frame_id: base_footprint # Changed to match your URDF root
+    publish_rate: 50.0
+    open_loop: false # Set to true if you don't want to use encoders
+    enable_odom_tf: true
+
+    # --- LIMITS & TIMEOUTS ---
+    cmd_vel_timeout: 0.5
+    use_stamped_vel: false
+
+    # --- COVARIANCE ---
+    pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
+    twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
