@@ -26,6 +26,11 @@ install(
     scripts/teleop_wasd.py
   DESTINATION lib/${PROJECT_NAME}
 )
+install(
+  PROGRAMS
+    scripts/sensor_live_plot.py
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
