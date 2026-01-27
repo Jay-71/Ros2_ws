@@ -1,0 +1,39 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+    
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+    
+    # CHANGE THIS: Use Trajectory Controller instead of Position Controller
+    gripper_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+arm_controller:
+  ros__parameters:
+    joints:
+      - "Revolute 1"
+      - "Revolute 2"
+      - "Revolute 3"
+      - "Revolute 4"
+      - "Revolute 5"
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+# UPDATE THIS SECTION
+gripper_controller:
+  ros__parameters:
+    joints:
+      - "Revolute 7"
+      - "Revolute 9"
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
