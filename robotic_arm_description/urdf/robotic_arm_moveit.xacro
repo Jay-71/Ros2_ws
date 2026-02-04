@@ -1,0 +1,362 @@
+<?xml version="1.0" ?>
+<robot name="robotic_arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find robotic_arm_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find robotic_arm_description)/urdf/robotic_arm.trans" />
+<xacro:include filename="$(find robotic_arm_description)/urdf/robotic_arm.gazebo" />
+
+<link name="base_link">
+  <inertial>
+    <origin xyz="-2.007054709924346e-15 0.0010969724106877298 0.022106105129284122" rpy="0 0 0"/>
+    <mass value="0.7425694933685707"/>
+    <inertia ixx="0.001058" iyy="0.001012" izz="0.001614" ixy="-0.0" iyz="3e-05" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robotic_arm_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robotic_arm_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link_1_1">
+  <inertial>
+    <origin xyz="0.007494556419068631 0.0014295742804474971 0.019382969802823384" rpy="0 0 0"/>
+    <mass value="0.5781349224169935"/>
+    <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0" iyz="0" ixz="0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 -0.0 -0.056" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robotic_arm_description/meshes/link_1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0 -0.0 -0.056" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robotic_arm_description/meshes/link_1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link_2_1">
+  <inertial>
+    <origin xyz="-0.007771879429282643 0.06000016712237793 -1.9522901933965997e-07" rpy="0 0 0"/>
+    <mass value="0.5029413662942186"/>
+    <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.004 -0.01391 -0.09628" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robotic_arm_description/meshes/link_2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.004 -0.01391 -0.09628" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robotic_arm_description/meshes/link_2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link_3_1">
+  <inertial>
+    <origin xyz="0.005719881503362506 0.04171160415245509 -3.141365007224006e-05" rpy="0 0 0"/>
+    <mass value="0.36971477325871516"/>
+    <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0" iyz="0" ixz="0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.004 -0.13391 -0.09628" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robotic_arm_description/meshes/link_3_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.004 -0.13391 -0.09628" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robotic_arm_description/meshes/link_3_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link_4_1">
+  <inertial>
+    <origin xyz="0.00527095562470308 0.01780796309871907 0.005045904090633033" rpy="0 0 0"/>
+    <mass value="0.12929221233201882"/>
+    <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0" iyz="0" ixz="0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0095 -0.22366 -0.10158" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robotic_arm_description/meshes/link_4_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0095 -0.22366 -0.10158" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robotic_arm_description/meshes/link_4_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Gripper_Base_1">
+  <inertial>
+    <origin xyz="-0.004157588146918339 0.024927874526774807 0.006440324757844368" rpy="0 0 0"/>
+    <mass value="0.12591882008563557"/>
+    <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0" iyz="0" ixz="0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0235 -0.25166 -0.10658" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robotic_arm_description/meshes/Gripper_Base_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0235 -0.25166 -0.10658" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robotic_arm_description/meshes/Gripper_Base_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="gear_L_1">
+  <inertial>
+    <origin xyz="-0.005551202562301736 0.0005817157119462624 0.002000000000000446" rpy="0 0 0"/>
+    <mass value="0.1"/>
+    <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0" iyz="0" ixz="0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0056 -0.28966 -0.12058" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robotic_arm_description/meshes/gear_L_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0056 -0.28966 -0.12058" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="gear_R_1">
+  <inertial>
+    <origin xyz="0.005391711091485479 0.0005650024514501917 0.0020000000000002516" rpy="0 0 0"/>
+    <mass value="0.1"/>
+    <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0325 -0.28966 -0.12058" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robotic_arm_description/meshes/gear_R_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0325 -0.28966 -0.12058" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Gripper_L_1">
+  <inertial>
+    <origin xyz="0.0033671378530476595 -0.025526019080591766 -0.0022499999999988085" rpy="0 0 0"/>
+    <mass value="0.1"/>
+    <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0" iyz="0" ixz="0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.02515 -0.28966 -0.12058" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robotic_arm_description/meshes/Gripper_L_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.02515 -0.28966 -0.12058" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Gripper_R_1">
+  <inertial>
+    <origin xyz="-0.003367137853050553 -0.02552601908058838 -0.002249999999999752" rpy="0 0 0"/>
+    <mass value="0.1"/>
+    <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0" iyz="0" ixz="0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.06325 -0.28966 -0.12058" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robotic_arm_description/meshes/Gripper_R_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.06325 -0.28966 -0.12058" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="Revolute 1" type="revolute">
+  <origin xyz="0.0 0.0 0.056" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="link_1_1"/>
+  <axis xyz="0.0 0.0 1.0"/>
+  <limit upper="5.934119" lower="0.0" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 2" type="revolute">
+  <origin xyz="0.004 0.01391 0.04028" rpy="0 0 0"/>
+  <parent link="link_1_1"/>
+  <child link="link_2_1"/>
+  <axis xyz="1.0 0.0 0.0"/>
+  <limit upper="3.403392" lower="-0.436332" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 3" type="revolute">
+  <origin xyz="0.0 0.12 0.0" rpy="0 0 0"/>
+  <parent link="link_2_1"/>
+  <child link="link_3_1"/>
+  <axis xyz="-1.0 0.0 -0.0"/>
+  <limit upper="2.356194" lower="-2.443461" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 4" type="revolute">
+  <origin xyz="0.0055 0.08975 0.0053" rpy="0 0 0"/>
+  <parent link="link_3_1"/>
+  <child link="link_4_1"/>
+  <axis xyz="-0.0 1.0 0.0"/>
+  <limit upper="6.108652" lower="0.0" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 5" type="revolute">
+  <origin xyz="0.014 0.028 0.005" rpy="0 0 0"/>
+  <parent link="link_4_1"/>
+  <child link="Gripper_Base_1"/>
+  <axis xyz="-1.0 -0.0 0.0"/>
+  <limit upper="2.268928" lower="-1.919862" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 7" type="revolute">
+  <origin xyz="-0.0179 0.038 0.014" rpy="0 0 0"/>
+  <parent link="Gripper_Base_1"/>
+  <child link="gear_L_1"/>
+  <axis xyz="0.0 -0.0 1.0"/>
+  <limit upper="0.087266" lower="-1.570796" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 8" type="revolute">
+  <origin xyz="0.009 0.038 0.014" rpy="0 0 0"/>
+  <parent link="Gripper_Base_1"/>
+  <child link="gear_R_1"/>
+  <axis xyz="0.0 -0.0 1.0"/>
+  <limit upper="1.570796" lower="-0.087266" effort="100" velocity="100"/>
+  <mimic joint="Revolute 7" multiplier="-1.0" offset="0" />
+</joint>
+
+<joint name="Revolute 9" type="revolute">
+  <origin xyz="-0.03075 0.0 0.0" rpy="0 0 0"/>
+  <parent link="gear_L_1"/>
+  <child link="Gripper_L_1"/>
+  <axis xyz="-0.0 0.0 -1.0"/>
+  <limit upper="6.28" lower="-6.28" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 10" type="revolute">
+  <origin xyz="0.03075 0.0 0.0" rpy="0 0 0"/>
+  <parent link="gear_R_1"/>
+  <child link="Gripper_R_1"/>
+  <axis xyz="-0.0 -0.0 1.0"/>
+  <limit upper="6.28" lower="-6.28" effort="100" velocity="100"/>
+  <mimic joint="Revolute 9" multiplier="1.0" offset="0" />
+</joint>
+
+<ros2_control name="GazeboSystem" type="system">
+    <hardware>
+      <plugin>mock_components/GenericSystem</plugin>
+    </hardware>
+
+    <joint name="Revolute 1">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="Revolute 2">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="Revolute 3">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="Revolute 4">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="Revolute 5">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+     <joint name="Revolute 7">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+     <joint name="Revolute 8">
+      <param name="mimic">Revolute 7</param>
+      <param name="multiplier">-1.0</param>
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+     <joint name="Revolute 9">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+      <joint name="Revolute 10">
+      <param name="mimic">Revolute 9</param>
+      <param name="multiplier">1.0</param>
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+  </ros2_control>
+
+  <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <parameters>$(find robotic_arm_description)/config/my_controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
+</robot>
