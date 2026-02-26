@@ -1,55 +1,64 @@
 #include <memory>
+#include <thread>
 #include <rclcpp/rclcpp.hpp>
 #include <moveit/move_group_interface/move_group_interface.h>
 
 int main(int argc, char * argv[])
 {
-  // 1. Initialize ROS 2
+  // 1. Setup Node & Background Spinner
   rclcpp::init(argc, argv);
   auto const node = std::make_shared<rclcpp::Node>(
-    "move_arm_node",
+    "automated_move",
     rclcpp::NodeOptions().automatically_declare_parameters_from_overrides(true)
   );
+  auto const logger = rclcpp::get_logger("move_arm");
 
-  // 2. Create the MoveIt Interface
-  auto const logger = rclcpp::get_logger("move_arm_node");
-  
-  // "arm" is the group name defined in Setup Assistant
+  rclcpp::executors::SingleThreadedExecutor executor;
+  executor.add_node(node);
+  std::thread spinner = std::thread([&executor]() { executor.spin(); });
+
   using moveit::planning_interface::MoveGroupInterface;
-  auto move_group_interface = MoveGroupInterface(node, "arm");
+  auto arm_group = MoveGroupInterface(node, "arm");
+
+  // Give the solver time and attempts
+  arm_group.setPlanningTime(5.0);
+  arm_group.setNumPlanningAttempts(5);
+
+  RCLCPP_INFO(logger, "Waiting for robot state...");
+  rclcpp::sleep_for(std::chrono::seconds(2));
 
   // -------------------------
-  // ACTION 1: Move to "Home"
+  // STEP 1: Go Home
   // -------------------------
-  RCLCPP_INFO(logger, "Planning to 'home' position...");
+  RCLCPP_INFO(logger, "Moving to Home...");
+  arm_group.setNamedTarget("home");
+  arm_group.move();
+  arm_group.clearPoseTargets();
+
+  // -------------------------
+  // STEP 2: Move to the Golden Coordinate
+  // -------------------------
+  double target_x = 0.002;
+  double target_y = -0.157;
+  double target_z = 0.076;
+
+  RCLCPP_INFO(logger, "Moving to Golden Coordinate: X=%.3f, Y=%.3f, Z=%.3f", target_x, target_y, target_z);
   
-  // Set named target
-  move_group_interface.setNamedTarget("home");
-  
-  // Plan and Execute
+  // Use setPositionTarget so it ignores orientation and just gets the tip there
+  arm_group.setPositionTarget(target_x, target_y, target_z);
+
   moveit::planning_interface::MoveGroupInterface::Plan my_plan;
-  bool success = (move_group_interface.plan(my_plan) == moveit::core::MoveItErrorCode::SUCCESS);
-
+  bool success = (arm_group.plan(my_plan) == moveit::core::MoveItErrorCode::SUCCESS);
+  
   if(success) {
-    RCLCPP_INFO(logger, "Plan Successful! Executing...");
-    move_group_interface.execute(my_plan);
+    RCLCPP_INFO(logger, "Plan Found! Executing...");
+    arm_group.execute(my_plan);
+    RCLCPP_INFO(logger, "Arrived successfully!");
   } else {
-    RCLCPP_ERROR(logger, "Planning Failed!");
-  }
-
-  // -------------------------
-  // ACTION 2: Move to Random
-  // -------------------------
-  RCLCPP_INFO(logger, "Planning to Random position...");
-  
-  move_group_interface.setRandomTarget();
-  
-  success = (move_group_interface.plan(my_plan) == moveit::core::MoveItErrorCode::SUCCESS);
-
-  if(success) {
-    move_group_interface.execute(my_plan);
+    RCLCPP_ERROR(logger, "Planning failed even on a known good coordinate. Check IK solver settings.");
   }
 
   rclcpp::shutdown();
+  spinner.join();
   return 0;
 }
